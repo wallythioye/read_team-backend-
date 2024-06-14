@@ -73,23 +73,22 @@ exports.loginUser = async (email, password) => {
   return { user, token };
 };
 
-
 exports.logoutUser = async (token) => {
   try {
-    // Vérifier si le token est présent et valide
+    // Vérifier si le token est présent
     if (!token) {
       throw new Error('Token not provided');
     }
 
     // Décoder le token pour obtenir les informations de l'utilisateur (ici _id)
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    
-    // Exemple de révocation du token en ajoutant à une liste noire (Redis)
-    client.set(`token_${token}`, 'revoked');
-    client.expire(`token_${token}`, 3600); // Expiration du token en 1 heure (optionnel)
+
+    // Révocation du token en ajoutant à une liste noire (Redis)
+    await client.setAsync(`token_${token}`, 'revoked');
+    await client.expireAsync(`token_${token}`, 3600); // Expiration du token en 1 heure (optionnel)
 
     return { message: 'Déconnexion réussie' };
   } catch (error) {
-    throw new Error('Erreur lors de la déconnexion');
+    throw new Error(`Erreur lors de la déconnexion: ${error.message}`);
   }
 };

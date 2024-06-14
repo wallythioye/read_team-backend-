@@ -23,3 +23,13 @@ exports.login = async (req, res) => {
   }
 };
 
+exports.logout = async (req, res) => {
+  const token = req.headers.authorization && req.headers.authorization.split(' ')[1];
+
+  try {
+    const result = await userService.logoutUser(token);
+    res.status(200).json(result);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};

@@ -7,7 +7,8 @@ const hotelSchema = new mongoose.Schema({
   telephone: { type: String, required: true },
   prix: { type: Number, required: true },
   devise: { type: String, enum: ['XOF', 'EUR', 'USD'], required: true },
-  photo: { type: String }
+  photo: { type: String },
+  owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User' } 
 });
 
 const Hotel = mongoose.model('Hotel', hotelSchema);
