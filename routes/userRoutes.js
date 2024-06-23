@@ -27,7 +27,7 @@ router.post('/login', userController.login);
 router.post('/ajoutHotel', upload.single('photo'), hotelController.create);
 router.get('/listeHotel', hotelController.getAllHotels); // Protection ajoutée
 router.put('/updateHotels/:id', hotelController.update);
-router.delete('/deleteHotels/:id', hotelController.delete);
 
+router.delete('/hotels/:id', hotelController.delete);
 
 module.exports = router;
