@@ -67,6 +67,7 @@ exports.update = async (req, res) => {
   }
 };
 
+
 exports.delete = async (req, res) => {
   try {
     const hotelId = req.params.id;
